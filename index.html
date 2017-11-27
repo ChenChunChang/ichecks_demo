@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width" name="viewport">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/all.css">
+    <script src="./js/jquery.js"></script>
+    <script src="./js/icheck.min.js"></script>
+    <style>
+        body,a{ font-size: 14px; color: #333;}
+        th,td{ padding: 6px;}
+    </style>
+</head>
+<body>
+<table id="testTable">
+    <thead>
+    <tr><th><input type="checkbox" class="js-checkbox-all"> 全选</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><input type="checkbox">一</td></tr>
+    <tr><td><input type="checkbox">二</td></tr>
+    <tr><td><input type="checkbox">三</td></tr>
+    <tr><td><input type="checkbox">四</td></tr>
+    </tbody>
+</table>
+<script>
+    $(("[type='checkbox']")).iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_square-blue'
+    });
+
+    var $checkboxAll = $(".js-checkbox-all"),
+        $checkbox = $("tbody").find("[type='checkbox']").not("[disabled]"),
+        length = $checkbox.length,
+        i=0;
+
+    $(("[type='checkbox']")).iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_square-blue'
+        /*
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal',
+        increaseArea: '20%' // optional
+        */
+    });
+
+
+    $checkboxAll.on("ifClicked",function(event){
+        if(event.target.checked){
+            $checkbox.iCheck('uncheck');
+            i=0;
+        }else{
+            $checkbox.iCheck('check');
+            i=length;
+        }
+    });
+    $checkbox.on('ifClicked',function(event){
+        event.target.checked ? i-- : i++;
+        if(i==length){
+            $checkboxAll.iCheck('check');
+        }else{
+            $checkboxAll.iCheck('uncheck');
+        }
+    })
+</script>
+</body>
+</html>
